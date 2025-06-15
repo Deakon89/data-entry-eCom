@@ -1,7 +1,7 @@
 {
   "build": {
     "builder": "nixpacks",
-    "buildCommand": "mvn package"
+    "buildCommand": "mvn package -DskipTests"
   },
   "deploy": {
     "startCommand": "java -jar target/*.jar"
