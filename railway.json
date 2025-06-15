@@ -1,0 +1,11 @@
+{
+  "build": {
+    "builder": "nixpacks",
+    "buildCommand": "./mvnw package",
+    "watchPatterns": ["back-end/app/**"],
+    "workingDirectory": "back-end/app"
+  },
+  "deploy": {
+    "startCommand": "java -jar target/*.jar"
+  }
+}
