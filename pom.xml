@@ -67,6 +67,11 @@
 		</dependency>
 
 		<dependency>
+  			<groupId>com.fasterxml.jackson.core</groupId>
+ 			 <artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
     		<groupId>commons-io</groupId>
     		<artifactId>commons-io</artifactId>
     		<version>2.15.1</version>
@@ -84,6 +89,13 @@
   			<artifactId>mysql-connector-j</artifactId>
   			<version>8.0.33</version>
 		</dependency>
+
+		<dependency>
+  			<groupId>jakarta.persistence</groupId>
+  			<artifactId>jakarta.persistence-api</artifactId>
+  			<version>3.1.0</version>
+		</dependency>
+
 		
 </dependencies>
 	<build>

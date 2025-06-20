@@ -4,11 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-@Converter(autoApply = true)
+@Converter
 public class JsonListConverter implements AttributeConverter<List<String>, String> {
 
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -31,8 +32,10 @@ public class JsonListConverter implements AttributeConverter<List<String>, Strin
             return Collections.emptyList();
         }
         try {
-            return mapper.readValue(dbData, mapper.getTypeFactory()
-                                               .constructCollectionType(List.class, String.class));
+            return mapper.readValue(
+              dbData,
+              mapper.getTypeFactory().constructCollectionType(List.class, String.class)
+            );
         } catch (IOException e) {
             throw new IllegalArgumentException("Errore deserializzazione tags", e);
         }
