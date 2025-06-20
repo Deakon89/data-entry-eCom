@@ -58,6 +58,6 @@ public class ProdService {
         Path filepath = Paths.get(uploadDir, filename);
         Files.createDirectories(filepath.getParent());
         Files.copy(file.getInputStream(), filepath, StandardCopyOption.REPLACE_EXISTING);
-        return "http://localhost:8080/" + uploadDir + filename;
+        return "https://data-entry-ecom-production.up.railway.app/" + uploadDir + filename;
     }
 }
