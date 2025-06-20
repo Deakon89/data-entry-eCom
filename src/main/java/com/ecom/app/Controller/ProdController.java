@@ -87,6 +87,7 @@ public class ProdController {
         if (imageUrl != null) {
             prod.setImageUrl(imageUrl);
         }
+        System.out.println(">>> TAGS RECEIVED: " + tags);
         Product saved = service.save(prod);
         return ResponseEntity.ok(saved);
     }
