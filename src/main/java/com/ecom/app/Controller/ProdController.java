@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -72,7 +73,8 @@ public class ProdController {
         @RequestParam String name,
         @RequestParam(required = false) String description,
         @RequestParam BigDecimal price,
-        @RequestParam(required = false) String paymentLink
+        @RequestParam(required = false) String paymentLink,
+        @RequestParam(required = false) List<String> tags 
     ) throws IOException {
         String imageUrl = service.storeImage(file);
         // Usa il costruttore di default + setter
@@ -81,6 +83,7 @@ public class ProdController {
         prod.setDescription(description);
         prod.setPrice(price);
         prod.setPaymentLink(paymentLink);
+        prod.setTags(tags != null ? tags : new ArrayList<>());
         if (imageUrl != null) {
             prod.setImageUrl(imageUrl);
         }
