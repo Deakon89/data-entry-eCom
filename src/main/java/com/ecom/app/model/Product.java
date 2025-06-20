@@ -29,12 +29,7 @@ public class Product {
 
      private String paymentLink;
 
-  @ElementCollection
-  @CollectionTable(
-    name = "product_tags", 
-    joinColumns = @JoinColumn(name = "product_id")
-  )
-  @OrderColumn(name = "tag_index")              // crea una colonna per l’ordine
-  @Column(name = "tag")                         // nome della colonna che contiene il valore
-  private List<String> tags = new ArrayList<>();
+    @Convert(converter = JsonListConverter.class)
+    @Column(columnDefinition = "JSON", nullable = false)
+    private List<String> tags;
 }
