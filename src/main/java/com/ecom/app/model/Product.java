@@ -32,4 +32,5 @@ public class Product {
     @Convert(converter = JsonListConverter.class)
     @Column(columnDefinition = "JSON", nullable = false)
     private List<String> tags;
+    
 }
