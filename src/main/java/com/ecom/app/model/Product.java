@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ecom.app.config.JsonListConverter;
+import jakarta.persistence.Convert;
+
 @Entity
 @Data
 @NoArgsConstructor
