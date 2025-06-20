@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -65,6 +66,13 @@ public class ProdController {
             })
             .orElse(ResponseEntity.notFound().build());
     }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Product> createJson(@RequestBody Product prod) {
+    // salva tutto (inclusi tags e imageUrl se presente)
+    Product saved = service.save(prod);
+    return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+}
 
     // —————————————— UPLOAD + CREA PRODOTTO ——————————————
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
