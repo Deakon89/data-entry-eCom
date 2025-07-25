@@ -1,4 +1,4 @@
-package main.java.com.ecom.app.config;
+package com.ecom.app.config;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
