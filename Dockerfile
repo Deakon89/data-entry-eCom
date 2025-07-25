@@ -1,8 +1,9 @@
 # Etapa 1: Build del progetto
-FROM eclipse-temurin:17-jdk AS build
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
+
 
 # Etapa 2: Immagine runtime
 FROM eclipse-temurin:17-jre
