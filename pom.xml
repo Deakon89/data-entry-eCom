@@ -120,7 +120,7 @@
 				<executions>
                  <execution>
                   <goals>
-                   <goal>repackage</goal> <!-- NECESSARIO per generare il jar eseguibile -->
+                   <goal>repackage</goal> 
                   </goals>
                  </execution>
                 </executions>
