@@ -116,6 +116,16 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.4.4</version>
+				<executions>
+                 <execution>
+                  <goals>
+                   <goal>repackage</goal> <!-- NECESSARIO per generare il jar eseguibile -->
+                  </goals>
+                 </execution>
+                </executions>
+
+
 				<configuration>
 					<excludes>
 						<exclude>
