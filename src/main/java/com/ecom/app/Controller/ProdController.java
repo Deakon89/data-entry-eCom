@@ -9,14 +9,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+// import java.nio.file.Files;
+// import java.nio.file.Path;
+// import java.nio.file.Paths;
+// import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,8 +79,9 @@ public class ProdController {
         @RequestParam(name = "file", required = false) MultipartFile file,
         @RequestParam String name,
         @RequestParam(required = false) String description,
-        @RequestParam BigDecimal price,
-        @RequestParam(required = false) String paymentLink,
+        @RequestParam BigDecimal priceSmall,
+        @RequestParam BigDecimal priceMedium,
+        @RequestParam BigDecimal priceLarge,
         @RequestParam(required = false) List<String> tags 
     ) throws IOException {
         String imageUrl = service.storeImage(file);
@@ -89,8 +89,9 @@ public class ProdController {
         Product prod = new Product();
         prod.setName(name);
         prod.setDescription(description);
-        prod.setPrice(price);
-        prod.setPaymentLink(paymentLink);
+        prod.setPriceSmall(priceSmall);
+        prod.setPriceMedium(priceMedium);
+        prod.setPriceLarge(priceLarge);
         prod.setTags(tags != null ? tags : new ArrayList<>());
         if (imageUrl != null) {
             prod.setImageUrl(imageUrl);

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ecom.app.config.JsonListConverter;
-import jakarta.persistence.Convert;
 
 @Entity
 @Data
@@ -26,12 +25,12 @@ public class Product {
     @Column(length = 1000)
     private String description;
 
-    private BigDecimal price;
+    private BigDecimal priceSmall;
+    private BigDecimal priceMedium;
+    private BigDecimal priceLarge;
 
     private String imageUrl;
-
-     private String paymentLink;
-
+    
     @Convert(converter = JsonListConverter.class)
     @Column(columnDefinition = "JSON", nullable = false)
     private List<String> tags;
