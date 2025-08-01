@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 // import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")
@@ -74,48 +73,33 @@ public class ProdController {
     return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 }
 
-  
-
+    // —————————————— UPLOAD + CREA PRODOTTO ——————————————
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-public ResponseEntity<?> uploadAndCreate(
-    @RequestParam(name = "file", required = false) MultipartFile file,
-    @RequestParam String name,
-    @RequestParam(required = false) String description,
-    @RequestParam BigDecimal priceSmall,
-    @RequestParam BigDecimal priceMedium,
-    @RequestParam BigDecimal priceLarge,
-    @RequestParam(required = false) List<String> tags 
-) {
-  try {
-    String imageUrl = service.storeImage(file);
-
-    Product prod = new Product();
-    prod.setName(name);
-    prod.setDescription(description);
-    prod.setPriceSmall(priceSmall);
-    prod.setPriceMedium(priceMedium);
-    prod.setPriceLarge(priceLarge);
-    prod.setTags(tags != null ? tags : new ArrayList<>());
-    if (imageUrl != null) {
-      prod.setImageUrl(imageUrl);
+    public ResponseEntity<Product> uploadAndCreate(
+        @RequestParam(name = "file", required = false) MultipartFile file,
+        @RequestParam String name,
+        @RequestParam(required = false) String description,
+        @RequestParam BigDecimal priceSmall,
+        @RequestParam BigDecimal priceMedium,
+        @RequestParam BigDecimal priceLarge,
+        @RequestParam(required = false) List<String> tags 
+    ) throws IOException {
+        String imageUrl = service.storeImage(file);
+        // Usa il costruttore di default + setter
+        Product prod = new Product();
+        prod.setName(name);
+        prod.setDescription(description);
+        prod.setPriceSmall(priceSmall);
+        prod.setPriceMedium(priceMedium);
+        prod.setPriceLarge(priceLarge);
+        prod.setTags(tags != null ? tags : new ArrayList<>());
+        if (imageUrl != null) {
+            prod.setImageUrl(imageUrl);
+        }
+        System.out.println(">>> TAGS RECEIVED: " + tags);
+        Product saved = service.save(prod);
+        return ResponseEntity.ok(saved);
     }
-
-    Product saved = service.save(prod);
-    return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-
-  } catch (Exception e) {
-    // Stampa lo stacktrace nei log di Cloud Run
-    e.printStackTrace();
-    // Restituisci al client il tipo di eccezione e il messaggio
-    Map<String,String> err = Map.of(
-      "error", e.getClass().getSimpleName(),
-      "message", e.getMessage()
-    );
-    return ResponseEntity
-      .status(HttpStatus.INTERNAL_SERVER_ERROR)
-      .body(err);
-  }
-}
 
     // —————————————— IMPORT JSON DI PRODOTTI ——————————————
  @PostMapping(value = "/upload-json", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
