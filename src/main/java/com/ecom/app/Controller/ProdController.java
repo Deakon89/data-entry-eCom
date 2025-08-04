@@ -73,7 +73,6 @@ public class ProdController {
     return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 }
 
-/*************  ✨ Windsurf Command 🌟  *************/
     // —————————————— UPLOAD + CREA PRODOTTO ——————————————
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Product> uploadAndCreate(
@@ -85,26 +84,27 @@ public class ProdController {
         @RequestParam BigDecimal priceLarge,
         @RequestParam(required = false) List<String> tags 
     ) throws IOException {
-        System.out.println(">>> UPLOADING FILE: " + (file == null ? "null" : file.getOriginalFilename()));
-        String imageUrl = service.storeImage(file);
-        System.out.println(">>> IMAGE URL: " + imageUrl);
-        // Usa il costruttore di default + setter
-        Product prod = new Product();
-        prod.setName(name);
-        prod.setDescription(description);
-        prod.setPriceSmall(priceSmall);
-        prod.setPriceMedium(priceMedium);
-        prod.setPriceLarge(priceLarge);
-        prod.setTags(tags != null ? tags : new ArrayList<>());
-        if (imageUrl != null) {
-            prod.setImageUrl(imageUrl);
+        try {
+            String imageUrl = service.storeImage(file);
+            Product prod = new Product();
+            prod.setName(name);
+            prod.setDescription(description);
+            prod.setPriceSmall(priceSmall);
+            prod.setPriceMedium(priceMedium);
+            prod.setPriceLarge(priceLarge);
+            prod.setTags(tags != null ? tags : new ArrayList<>());
+            if (imageUrl != null) {
+                prod.setImageUrl(imageUrl);
+            }
+            System.out.println(">>> TAGS RECEIVED: " + tags);
+            Product saved = service.save(prod);
+            System.out.println(">>> PRODUCT SAVED SUCCESSFULLY: " + saved);
+            return ResponseEntity.ok(saved);
+        } catch (Exception e) {
+            System.err.println(">>> ERROR CREATING PRODUCT: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        System.out.println(">>> TAGS RECEIVED: " + tags);
-        Product saved = service.save(prod);
-        System.out.println(">>> PRODUCT SAVED: " + saved);
-        return ResponseEntity.ok(saved);
     }
-/*******  2a16056d-2012-4a05-b80b-8d60ad65ed07  *******/
 
     // —————————————— IMPORT JSON DI PRODOTTI ——————————————
  @PostMapping(value = "/upload-json", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
