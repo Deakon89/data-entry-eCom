@@ -32,7 +32,7 @@ public class Product {
     private String imageUrl;
     
     @Convert(converter = JsonListConverter.class)
-    @Column(columnDefinition = "JSON", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private List<String> tags;
     
 }
